@@ -43,9 +43,9 @@ async function getAlreadyMounted (mountDir, shareAlias) {
 }
 
 async function mountDrive (database, host, useNetwork, shareName, shareAlias) {
-  let reachableAddress = await networktools.getHostIP(host, useNetwork.network, database).catch(err => console.error(err))
+  let reachableAddress = await networktools.getHostIP(host, useNetwork, database).catch(err => console.error(err))
   if (reachableAddress) {
-    let mountCmd = `mkdir -p ${database.client.mountDir}/${shareAlias}; mount -t cifs -o vers=3,username=${database.mounts[host].user},password=${database.mounts[host].password},uid=0,gid=0,iocharset=utf8,file_mode=0775,dir_mode=0775,cache=none //${reachableAddress}/${shareName} ${database.client.mountDir}/${shareAlias}`
+    let mountCmd = `mkdir -p ${database.client.mountDir}/${shareAlias}; mount -t cifs -o username=${database.mounts[host].user},password=${database.mounts[host].password}${database.client.mountOptions ? ',' + database.client.mountOptions : ''} //${reachableAddress}/${shareName} ${database.client.mountDir}/${shareAlias}`
     exec(`${mountCmd}`, { timeout: 30000 }, async (err, stdout, stderr) => {
       if (!err) {
         let result = await this.getAlreadyMounted(database.client.mountDir, shareAlias).catch(err => console.error(err))

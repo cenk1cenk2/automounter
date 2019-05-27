@@ -77,14 +77,13 @@ async function main () {
 
   // Drive mount part per computer
   Object.keys(database.mounts).forEach(async (host) => {
-    // console.log(`${pad(host, 20)} | Trying to mount drives on host.`)
     // Check if given mounts are avaliable in knownNetworks and determine the preffered networks of the mounts
     var prefferedNetworks = await networktools.getPrefferedNetworks(database, host, knownNetworks)
 
     // only get the network with the highest priorty and check if any network is avalaible else skip this mount
     if (prefferedNetworks.length > 0) {
       var useNetwork = prefferedNetworks[0]
-      console.log(chalk.blue(`${pad(host, 20)} | Network "${useNetwork.name}" will be used with network address "${useNetwork.network}" and priority ${useNetwork.priority}.`))
+      console.log(`${pad(host, 20)} | Network "${useNetwork.name}" will be used with network address "${useNetwork.network}" and priority ${useNetwork.priority}.`)
       database.mounts[host].mounts.forEach(async (shareName) => {
         // Split share name and alias by colon if defined
         shareName = await databasetools.splitShareName(shareName)
@@ -92,14 +91,14 @@ async function main () {
         var alreadyMounted = await mounttools.getAlreadyMounted(database.client.mountDir, shareName.shareAlias)
         // Mount if not already mounted
         if (alreadyMounted !== true) {
-          console.log(chalk.blue(`${pad(host, 20)} | ${pad('WISH TO MOUNT', 15)} | ${shareName.shareName} with alias ${shareName.shareAlias}`))
+          console.log(`${pad(host, 20)} | ${pad('WISH TO MOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`)
           mounttools.mountDrive(database, host, useNetwork, shareName.shareName, shareName.shareAlias)
         } else {
-          console.error(chalk.yellow(`${pad(host, 20)} | ${pad('ALREADY MOUNT', 15)} | ${shareName.shareName} with alias ${shareName.shareAlias}`))
+          console.error(chalk.blue(`${pad(host, 20)} | ${pad('ALREADY MOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`))
         }
       })
     } else {
-      console.log(chalk.yellow(`${pad(host, 20)} | Not in same network. Checking if any shares are already mounted.`))
+      console.log(chalk.yellow(`${pad(host, 20)} | ${pad('NETWORK', 15)} | Not in same network. Checking if any shares are already mounted.`))
       // umount if not on compatible network
       database.mounts[host].mounts.forEach(async (shareName) => {
         // Split share name and alias by colon if defined
@@ -107,10 +106,10 @@ async function main () {
         var alreadyMounted = await mounttools.getAlreadyMounted(database.client.mountDir, shareName.shareAlias)
         // UNMount if not already mounted
         if (alreadyMounted === true) {
-          console.log(chalk.blue(`${pad(host, 20)} | ${pad('WISH TO UNMOUNT', 15)} | ${shareName.shareName} with alias ${shareName.shareAlias}`))
+          console.log(`${pad(host, 20)} | ${pad('WISH TO UNMOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`)
           mounttools.unmountDrive(database, host, shareName.shareAlias)
         } else {
-          console.error(chalk.yellow(`${pad(host, 20)} | ${pad('ALREADY UNMOUNT', 15)} | ${shareName.shareName} with alias ${shareName.shareAlias}`))
+          console.error(chalk.blue(`${pad(host, 20)} | ${pad('ALREADY UNMOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`))
         }
       })
     }
