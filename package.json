@@ -16,8 +16,9 @@
   },
   "bin": "automounter.js",
   "pkg": {
-    "scripts": ["./**/.js"],
-    "assets": [],
-    "targets": ["node12-linux-x64"]
+    "scripts": ["./*.js", "./libraries/*.js"],
+    "assets": ["./node_modules/**"],
+    "targets": ["node12-linux-x64"],
+    "out-dir": "./dist"
   }
 }
