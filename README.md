@@ -27,6 +27,7 @@ In initial run it will generate the database while ./automounter-db.json file wh
 
 You can easily setup the generated as below.
 
+```
 {
   "client": {
     "repeat": 60, (in Seconds)
@@ -52,3 +53,4 @@ You can easily setup the generated as below.
     }
   }
 }
+```
