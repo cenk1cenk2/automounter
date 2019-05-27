@@ -1,11 +1,7 @@
 ```
 name:         | automounter
 compiler:     | nodejs
-<<<<<<< HEAD
-version:      | v1.0.0, 20190521
-=======
 version:      | v1.10, 201905--
->>>>>>> 1ac1a4c... Rebased
 ```
 
 # Development Notes
