@@ -14,10 +14,13 @@ The use case scenerio of this is when you have a mobile workstation like a lapto
 
 Since SMB4k unfortunately not working as intended on my system, I made this crude implementation with this little twist to suffice.
 
-## Dependencies
+## Dependencies and Prerequisites
 
 * For now only Linux platform is supported.
-* nmblookup therefor samba-common has to be configured, since this is a crude implementation it uses nmblookup to lookup the WINS name of the device in network
+* nmblookup therefor samba-common has to be configured, since this is a crude implementation it uses nmblookup to lookup the WINS name of the device in network.
+
+## Compiled Version
+You can find the compiled version in the [releases](https://github.com/cenk1cenk2/automounter/releases/latest).
 
 ## Setup
 

@@ -1,9 +1,9 @@
 {
   "name": "automounter",
-  "version": "1.0.0",
+  "version": "1.10",
   "description": "A program to auto mount CIFS shares on Linux taking in account that your current network.",
-  "main": "index.js",
-  "author": "Cenk Kilic ",
+  "main": "automounter.js",
+  "author": "Cenk Kılıç",
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.2",
@@ -13,5 +13,11 @@
     "pad": "^3.2.0",
     "ping": "^0.2.2",
     "underscore": "^1.9.1"
+  },
+  "bin": "automounter.js",
+  "pkg": {
+    "scripts": "./**/*.js",
+    "targets": "node12-linux-x64",
+    "out-path": "./dist"
   }
 }
