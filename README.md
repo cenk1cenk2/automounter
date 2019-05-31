@@ -25,22 +25,22 @@ You can find the compiled version in the [releases](https://github.com/cenk1cenk
 ## Command Line Options
 ```
 -------------------------------------------
-Usage: automounter \[options\] \[flags\]
+Usage: automounter [options] [flags]
 
 Options:
   -r, --repeat        Override the default repeat time in the database.
   -o, --once          Script will run once instead of the default option of
-                      repeating.                                       \[boolean\]
+                      repeating.                                       [boolean]
   -c, --config        Override the default database location.
   -u, --unmount       Force unmount all the defined drives in database. Script
-                      will terminate after.                            \[boolean\]
+                      will terminate after.                            [boolean]
   -p, --path-unmount  Force unmount all the folders recursively in the mount
                       path. Script will terminate after.
                       Depth must be supplied to tell how many folders to
                       recurse. Default is 1.
-  -a, --ask           Asks the user for prompt before taking action.   \[boolean\]
-  -h, --help          Show help                                        \[boolean\]
-  -v, --version       Show version number                              \[boolean\]
+  -a, --ask           Asks the user for prompt before taking action.   [boolean]
+  -h, --help          Show help                                        [boolean]
+  -v, --version       Show version number                              [boolean]
 ```
 
 ## Setup
