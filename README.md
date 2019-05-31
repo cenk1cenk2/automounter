@@ -24,7 +24,6 @@ You can find the compiled version in the [releases](https://github.com/cenk1cenk
 
 ## Command Line Options
 ```
--------------------------------------------
 Usage: automounter [options] [flags]
 
 Options:
