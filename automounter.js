@@ -28,6 +28,7 @@ const isRoot = require('is-root')
 const chalk = require('chalk')
 const pad = require('pad')
 const args = require('./libraries/argumentparser')
+const path = require('path')
 
 // Check if the platform is compatible
 if (os.platform() !== 'linux') {
@@ -53,7 +54,6 @@ databasetools.initdatabase(databaseAbsURL)
 const database = require(databaseAbsURL)
 
 //  libraries
-const path = require('path')
 const underscore = require('underscore')
 const moment = require('moment')
 const readdirp = require('readdirp')
