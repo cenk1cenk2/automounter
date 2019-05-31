@@ -4,7 +4,7 @@
  * File Created: 20190521
  * Author: Cenk Kılıç (cenk@kilic.dev)
  * -------------------------
- * Last Modified: 20190530
+ * Last Modified: 20190601
  * Modified By: Cenk Kılıç (cenk@kilic.dev>)
  * Changelog:----------------
  * Date          By      Ver      Comments
@@ -27,12 +27,12 @@ function initdatabase (databaseURL) {
   let buffer = JSON.stringify({ 'client': { 'repeat': 'INT_REPEATTIMEINSECONDS', 'mountDir': 'STR_MOUNTDIRECTORYFROMROOT', 'mountOptions': 'STR_CIFSOPTIONS' }, 'networks': { 'STR_NETWORKNAME': { 'network': 'STR_NETWORKIP', 'priority': 'INT' } }, 'mounts': { 'STR_SHARENAME': { 'enabled': 'bool', 'mounts': 'ARRAY_[MOUNTNAME@(OPTIONAL)MOUNTALIAS]', 'available': 'ARRAY_[STR_NETWORKNAME]@(OPTIONAL)IP', 'user': 'STR_USERNAME', 'password': 'STR_PASSWORD' } } })
   if (!fs.existsSync(databaseURL)) {
     fs.writeFileSync(databaseURL, buffer, { flag: 'wx' })
-    console.error(chalk.yellow(`${pad('CLIENT', 20)} | Database not found initating.`))
-    console.log(chalk.red(`${pad('CLIENT', 20)} | Database initiated. Program will terminate.`))
-    console.log(chalk.red(`${pad('CLIENT', 20)} | Please edit the database for it to function properly.`))
+    console.error(chalk.yellow(`${pad('CLIENT', 20)} | ${pad('DATABASE', 15)} | Database not found initating.`))
+    console.log(chalk.red(`${pad('CLIENT', 20)} | ${pad('DATABASE', 15)} | Database initiated. Program will terminate.`))
+    console.log(chalk.red(`${pad('CLIENT', 20)} | ${pad('DATABASE', 15)} | Please edit the database for it to function properly.`))
     process.exit(10)
   } else {
-    console.log(chalk.green(`${pad('CLIENT', 20)} | Database exists and succesfully read.`))
+    console.log(chalk.green(`${pad('CLIENT', 20)} | ${pad('DATABASE', 15)} | Database exists and succesfully read.`))
   }
 }
 
