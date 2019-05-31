@@ -4,11 +4,12 @@
  * File Created: 20190521
  * Author: Cenk Kılıç (cenk@kilic.dev)
  * -------------------------
- * Last Modified: 20190527
+ * Last Modified: 20190601
  * Modified By: Cenk Kılıç (cenk@kilic.dev>)
  * Changelog:----------------
  * Date          By      Ver      Comments
  * -----------   ----    ----     ---------------------------------------------------------
+ * 20190601      CK      v1.20
  * 20190527      CK      v1.10
  * 20190523      CK      v1.01
  * 20190521      CK      v1.00    Initial version.
@@ -50,9 +51,9 @@ async function mountDrive (database, host, useNetwork, shareName, shareAlias) {
       if (!err) {
         let result = await this.getAlreadyMounted(database.client.mountDir, shareAlias).catch(err => console.error(err))
         if (result) {
-          console.log(chalk.green(`${pad(host, 20)} | ${pad('MOUNT', 15)} | //${host}/${shareAlias}`))
+          console.log(chalk.green(`${pad(host, 20)} | ${pad('MOUNT DONE', 15)} | //${host}/${shareAlias}`))
         } else {
-          console.error(chalk.bgRed(`${pad(host, 20)} | ${pad('ERROR', 15)} | while mounting: //${host}/${shareAlias} ${err}`))
+          console.error(chalk.bgRed(`${pad(host, 20)} | ${pad('MOUNT FAIL', 15)} | //${host}/${shareAlias} ${err}`))
         }
       } else {
         console.error(chalk.bgMagenta(`${pad(host, 20)} | ${pad('OSERROR', 15)} | while trying to mount //${host}/${shareAlias}`))
@@ -69,9 +70,9 @@ async function unmountDrive (database, host, shareAlias) {
     if (!err) {
       let result = await this.getAlreadyMounted(database.client.mountDir, shareAlias)
       if (!result) {
-        console.log(chalk.green(`${pad(host, 20)} | ${pad('UNMOUNT', 15)} | //${host}/${shareAlias}`))
+        console.log(chalk.green(`${pad(host, 20)} | ${pad('UNMOUNT DONE', 15)} | //${host}/${shareAlias}`))
       } else {
-        console.error(chalk.bgRed(`${pad(host, 20)} | ${pad('ERROR', 15)} | while unmounting: //${host}/${shareAlias} ${err}`))
+        console.error(chalk.bgRed(`${pad(host, 20)} | ${pad('UNMOUNT FAIL', 15)} | //${host}/${shareAlias} ${err}`))
       }
     } else {
       console.error(chalk.bgMagenta(`${pad(host, 20)} | ${pad('OSERROR', 15)} | while trying to unmount //${host}/${shareAlias} ${err}`))
