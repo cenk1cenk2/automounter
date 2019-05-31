@@ -4,7 +4,7 @@
  * File Created: 20190521
  * Author: Cenk Kılıç (cenk@kilic.dev)
  * -------------------------
- * Last Modified: 20190527
+ * Last Modified: 20190530
  * Modified By: Cenk Kılıç (cenk@kilic.dev>)
  * Changelog:----------------
  * Date          By      Ver      Comments
@@ -24,7 +24,7 @@ module.exports = {
 }
 
 function initdatabase (databaseURL) {
-  let buffer = JSON.stringify({ 'client': { 'repeat': 'INT_REPEATTIMEINSECONDS', 'mountDir': 'STR_MOUNTDIRECTORYFROMROOT', 'mountOptions': 'STR_CIFSOPTIONS' }, 'networks': { 'STR_NETWORKNAME': { 'network': 'STR_NETWORKIP', 'priority': 'INT' } }, 'mounts': { 'STR_SHARENAME': { 'mounts': 'ARRAY_[MOUNTNAME@(OPTIONAL)MOUNTALIAS]', 'available': 'ARRAY_[STR_NETWORKNAME]@(OPTIONAL)IP', 'user': 'STR_USERNAME', 'password': 'STR_PASSWORD' } } })
+  let buffer = JSON.stringify({ 'client': { 'repeat': 'INT_REPEATTIMEINSECONDS', 'mountDir': 'STR_MOUNTDIRECTORYFROMROOT', 'mountOptions': 'STR_CIFSOPTIONS' }, 'networks': { 'STR_NETWORKNAME': { 'network': 'STR_NETWORKIP', 'priority': 'INT' } }, 'mounts': { 'STR_SHARENAME': { 'enabled': 'bool', 'mounts': 'ARRAY_[MOUNTNAME@(OPTIONAL)MOUNTALIAS]', 'available': 'ARRAY_[STR_NETWORKNAME]@(OPTIONAL)IP', 'user': 'STR_USERNAME', 'password': 'STR_PASSWORD' } } })
   if (!fs.existsSync(databaseURL)) {
     fs.writeFileSync(databaseURL, buffer, { flag: 'wx' })
     console.error(chalk.yellow(`${pad('CLIENT', 20)} | Database not found initating.`))

@@ -4,11 +4,12 @@
  * File Created: 20190518
  * Author: Cenk Kılıç (cenk@kilic.dev)
  * -------------------------
- * Last Modified: 20190527
+ * Last Modified: 20190530
  * Modified By: Cenk Kılıç (cenk@kilic.dev>)
  * Changelog:----------------
  * Date          By      Ver      Comments
  * -----------   ----    ----     ---------------------------------------------------------
+ * 20190530      CK      v1.11    Added enabled flag to database.
  * 20190527      CK      v1.10    Added fallback IP option to database.
  * 20190523      CK      v1.01    Formatted output with color and padding.
  * 20190518      CK      v1.00    Initial Version
@@ -77,41 +78,46 @@ async function main () {
 
   // Drive mount part per computer
   Object.keys(database.mounts).forEach(async (host) => {
+    // Check if host is enabled
+    if (database.mounts[host].enabled) {
     // Check if given mounts are avaliable in knownNetworks and determine the preffered networks of the mounts
-    var prefferedNetworks = await networktools.getPrefferedNetworks(database, host, knownNetworks)
+      var prefferedNetworks = await networktools.getPrefferedNetworks(database, host, knownNetworks)
 
-    // only get the network with the highest priorty and check if any network is avalaible else skip this mount
-    if (prefferedNetworks.length > 0) {
-      var useNetwork = prefferedNetworks[0]
-      console.log(`${pad(host, 20)} | Network "${useNetwork.name}" will be used with network address "${useNetwork.network}" and priority ${useNetwork.priority}.`)
-      database.mounts[host].mounts.forEach(async (shareName) => {
+      // only get the network with the highest priorty and check if any network is avalaible else skip this mount
+      if (prefferedNetworks.length > 0) {
+        var useNetwork = prefferedNetworks[0]
+        console.log(`${pad(host, 20)} | Network "${useNetwork.name}" will be used with network address "${useNetwork.network}" and priority ${useNetwork.priority}.`)
+        database.mounts[host].mounts.forEach(async (shareName) => {
         // Split share name and alias by colon if defined
-        shareName = await databasetools.splitShareName(shareName)
-        // Check if already mounted
-        var alreadyMounted = await mounttools.getAlreadyMounted(database.client.mountDir, shareName.shareAlias)
-        // Mount if not already mounted
-        if (alreadyMounted !== true) {
-          console.log(`${pad(host, 20)} | ${pad('WISH TO MOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`)
-          mounttools.mountDrive(database, host, useNetwork, shareName.shareName, shareName.shareAlias)
-        } else {
-          console.error(chalk.blue(`${pad(host, 20)} | ${pad('ALREADY MOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`))
-        }
-      })
+          shareName = await databasetools.splitShareName(shareName)
+          // Check if already mounted
+          var alreadyMounted = await mounttools.getAlreadyMounted(database.client.mountDir, shareName.shareAlias)
+          // Mount if not already mounted
+          if (alreadyMounted !== true) {
+            console.log(`${pad(host, 20)} | ${pad('WISH TO MOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`)
+            mounttools.mountDrive(database, host, useNetwork, shareName.shareName, shareName.shareAlias)
+          } else {
+            console.error(chalk.blue(`${pad(host, 20)} | ${pad('ALREADY MOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`))
+          }
+        })
+      } else {
+        console.log(chalk.yellow(`${pad(host, 20)} | ${pad('NETWORK', 15)} | Not in same network. Checking if any shares are already mounted.`))
+        // umount if not on compatible network
+        database.mounts[host].mounts.forEach(async (shareName) => {
+        // Split share name and alias by colon if defined
+          shareName = await databasetools.splitShareName(shareName)
+          var alreadyMounted = await mounttools.getAlreadyMounted(database.client.mountDir, shareName.shareAlias)
+          // UNMount if not already mounted
+          if (alreadyMounted === true) {
+            console.log(`${pad(host, 20)} | ${pad('WISH TO UNMOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`)
+            mounttools.unmountDrive(database, host, shareName.shareAlias)
+          } else {
+            console.error(chalk.blue(`${pad(host, 20)} | ${pad('ALREADY UNMOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`))
+          }
+        })
+      }
     } else {
-      console.log(chalk.yellow(`${pad(host, 20)} | ${pad('NETWORK', 15)} | Not in same network. Checking if any shares are already mounted.`))
-      // umount if not on compatible network
-      database.mounts[host].mounts.forEach(async (shareName) => {
-        // Split share name and alias by colon if defined
-        shareName = await databasetools.splitShareName(shareName)
-        var alreadyMounted = await mounttools.getAlreadyMounted(database.client.mountDir, shareName.shareAlias)
-        // UNMount if not already mounted
-        if (alreadyMounted === true) {
-          console.log(`${pad(host, 20)} | ${pad('WISH TO UNMOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`)
-          mounttools.unmountDrive(database, host, shareName.shareAlias)
-        } else {
-          console.error(chalk.blue(`${pad(host, 20)} | ${pad('ALREADY UNMOUNT', 15)} | ${shareName.shareName}@${shareName.shareAlias}`))
-        }
-      })
+      console.error(chalk.magenta(`${pad(host, 20)} | ${pad('SKIPPING', 15)} | Skipping host since it is disabled in database.`))
     }
   })
 }

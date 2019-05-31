@@ -1,7 +1,7 @@
 ```
 name:         | automounter
 compiler:     | nodejs
-version:      | v1.10, 20190527
+version:      | v1.11, 20190530
 ```
 
 # Automounter
@@ -49,6 +49,7 @@ You can easily setup the generated as below.
   },
   "mounts": {
     "PC01": (it will look up for this name in the nmblookup, so this has to be advertised samba name) {
+      "enabled": true (for easily switching depending on the situatation)
       "mounts": ["SHARE01@PC01/DATA_1", "SHARE02@PC01/DATA_2"], ( first part must match the samba share name; if you want to create ALIAS for the share given use @ALIAS after. you can also mount it in subfolders if you use the hiearchy using unix folder structure )
       "available": ["home@.6", "vpn"], (match the exact name in networks section; if you want to create a fallback IP in case of nmblookup fails, @IP or @.IP in /24 netmask will be sufficient)
       "user": "superusername",

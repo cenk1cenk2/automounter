@@ -1,6 +1,6 @@
 {
   "name": "automounter",
-  "version": "1.10",
+  "version": "1.11",
   "description": "A program to auto mount CIFS shares on Linux taking in account that your current network.",
   "main": "automounter.js",
   "author": "Cenk Kılıç",
