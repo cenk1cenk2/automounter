@@ -23,6 +23,7 @@ Since SMB4k unfortunately not working as intended on my system, I made this crud
 You can find the compiled version in the [releases](https://github.com/cenk1cenk2/automounter/releases/latest).
 
 ## Command Line Options
+```
 -------------------------------------------
 Usage: automounter \[options\] \[flags\]
 
@@ -40,6 +41,7 @@ Options:
   -a, --ask           Asks the user for prompt before taking action.   \[boolean\]
   -h, --help          Show help                                        \[boolean\]
   -v, --version       Show version number                              \[boolean\]
+```
 
 ## Setup
 
