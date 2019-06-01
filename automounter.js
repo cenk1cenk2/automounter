@@ -17,10 +17,10 @@
  */
 
 // Print logo
-console.log(`       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |a|u|t|o|m|o|u|n|t|e|r| v${require('./package.json').version}
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+ `)
-console.log('-------------------------------------------')
+console.log(`     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |a|u|t|o|m|o|u|n|t|e|r| v${require('./package.json').version}
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+ `)
+console.log('----------------------------------------')
 
 // initial control libraries
 const os = require('os')
@@ -208,6 +208,8 @@ async function pathUnmount () {
         .then(answer => resolve(answer))
         .catch(console.error)
     })
+  } else {
+    pathUnmountList = pathUnmountList.map(x => x.name)    
   }
   // unmount the drives
   pathUnmountList.forEach(async (path) => {
