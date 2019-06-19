@@ -4,7 +4,7 @@
  * File Created: 20190521
  * Author: Cenk Kılıç (cenk@kilic.dev)
  * -------------------------
- * Last Modified: 20190527
+ * Last Modified: 20190619
  * Modified By: Cenk Kılıç (cenk@kilic.dev>)
  * Changelog:----------------
  * Date          By      Ver      Comments
@@ -38,9 +38,8 @@ async function getHostIP (serverName, useNetwork, database) {
         // fallback to given IP at the database
         console.error(chalk.red(`${pad(serverName, 20)} | ${pad('NETWORK', 15)} | Can not resolve hostname with nmblookup.`))
         console.log(chalk.yellow(`${pad(serverName, 20)} | ${pad('NETWORK', 15)} | Falling back to refering to database for resolving IP.`))
-        let fallbackIP = database.mounts[serverName].available.map(avaliableNetwork => { return avaliableNetwork.match(useNetwork.name) })
-        if (database.networks[useNetwork.name].network && fallbackIP && fallbackIP[0].input.split('@')[1]) {
-          fallbackIP = fallbackIP[0].input
+        let fallbackIP = database.mounts[serverName].available.find(avaliableNetwork => { return avaliableNetwork.match(useNetwork.name) })
+        if (database.networks[useNetwork.name].network && fallbackIP && fallbackIP.split('@')[1]) {
           fallbackIP = database.networks[useNetwork.name].network.match(/^([0-9]*\.[0-9]*\.[0-9]*)/)[1] + '.' + fallbackIP.split('@')[1].match(/\.([0-9]*)/)[1]
           ping.sys.probe(fallbackIP, (isAlive) => {
             isAlive ? resolve(fallbackIP) : reject(chalk.red(`${pad(serverName, 20)} | ${pad('NETWORK', 15)} | Fallback database IP is not responding.`))
