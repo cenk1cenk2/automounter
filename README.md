@@ -1,7 +1,7 @@
 ```
 name:         | automounter
 compiler:     | nodejs
-version:      | v1.20, 20190601
+version:      | v1.21, 20190619
 ```
 
 # Automounter
